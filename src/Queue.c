@@ -3,11 +3,11 @@
 void enqueue(Queue* q, const_T val, T param) {
     assert(q != NULL);
     Node* new_node = (Node*)malloc(sizeof(Node));
+    assert(new_node != NULL);
     new_node->val = val;
     new_node->param = param;
     new_node->prev = NULL;
     new_node->next = NULL;
-    assert(new_node != NULL);
     if (!q->head) {
         q->head = new_node;
         q->tail = q->head;
