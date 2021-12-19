@@ -19,10 +19,8 @@ void submit(Pool* p, const_T f, T params) {
     pthread_mutex_unlock(&p->lock);
 }
 
-void* run(void* arg) {
+T run(T arg) {
     Pool* p = (Pool*)arg;
-    // uint64_t tid;
-    // pthread_threadid_np(NULL, &tid);
     while (1) {
         Node n;
         pthread_mutex_lock(&p->lock);
@@ -38,7 +36,7 @@ void* run(void* arg) {
         pthread_mutex_unlock(&p->lock);
         assert(n.val != NULL);
         func f = n.val;
-        void* res = f(n.param);
+        T res = f(n.param);
         pthread_mutex_lock(&p->res_lock);
         enqueue(&p->res, res, NULL);
         pthread_mutex_unlock(&p->res_lock);
@@ -55,8 +53,6 @@ void join_pool(Pool* p) {
 }
 
 void close_pool(Pool* p) {
-    uint64_t tid;
-    pthread_threadid_np(NULL, &tid);
     pthread_mutex_lock(&p->lock);
     atomic_store(&p->pred, 1);
     pthread_cond_broadcast(&p->cond);

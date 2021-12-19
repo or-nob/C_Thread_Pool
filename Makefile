@@ -1,6 +1,6 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 
-INSTALL_PATH := /usr/bin
+# INSTALL_PATH := /usr/bin
 TARGET_EXEC := pool
 
 CC := cc
@@ -32,8 +32,7 @@ LIBS :=
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
 LINKERS := -pthread
-# CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -Wno-deprecated-declarations -DMAX_SYS_FILE_SIZE=50 -DORACLE_DATABASE -DNDEBUG -DCURL_SIM -O3 -DJSMN_STATIC
-CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -Wno-deprecated-declarations -DMAX_SYS_FILE_SIZE=50 -O3
+CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DNDEBUG
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
@@ -53,8 +52,8 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 clean:
 	rm -r $(BUILD_DIR)
 
-install:
-	cp $(BUILD_DIR)/$(TARGET_EXEC) $(INSTALL_PATH)
+# install:
+# 	cp $(BUILD_DIR)/$(TARGET_EXEC) $(INSTALL_PATH)
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those

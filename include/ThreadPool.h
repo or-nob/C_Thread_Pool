@@ -6,7 +6,7 @@
 
 #include "Queue.h"
 
-typedef void* (*func)(void*);
+typedef T (*func)(T);
 
 typedef struct {
     pthread_t* thread_array;
@@ -22,7 +22,7 @@ typedef struct {
 
 void init_pool(Pool* p);
 void submit(Pool* p, const_T f, T params);
-static void* run(void* arg);
+static T run(T arg);
 void join_pool(Pool* p);
 void close_pool(Pool* p);
 void free_pool(Pool* p);

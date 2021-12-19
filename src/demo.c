@@ -8,9 +8,7 @@
 
 void* f1(void* args) {
     int recasted_arg = *(int*)args;
-    uint64_t tid;
-    pthread_threadid_np(NULL, &tid);
-    printf("Int: %d %lld\n", recasted_arg, tid);
+    printf("Int: %d\n", recasted_arg);
     sleep(1);
     char* str = strdup("hello");
     return str;
@@ -61,7 +59,7 @@ int main(void) {
         // debug("size: %d", p.res.size);
         Node res = deqeue(&p.res);
         if (res.val != NULL) {
-            debug("output: %s", (char*)res.val);
+            printf("output: %s\n", (char*)res.val);
             free((char*)res.val);
         }
     }
