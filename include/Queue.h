@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
@@ -24,8 +28,13 @@ typedef struct {
     Node* tail;
 } Queue;
 
+void init_queue(Queue* q);
 void enqueue(Queue* q, const_T val, T param);
 Node deqeue(Queue* q);
 void free_queue(Queue* q);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

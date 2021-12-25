@@ -1,5 +1,11 @@
 #include "Queue.h"
 
+void init_queue(Queue* q) {
+    assert(q != NULL);
+    q->head = NULL;
+    atomic_store(&q->size, 0);
+}
+
 void enqueue(Queue* q, const_T val, T param) {
     assert(q != NULL);
     Node* new_node = (Node*)malloc(sizeof(Node));
@@ -17,6 +23,7 @@ void enqueue(Queue* q, const_T val, T param) {
         q->tail = new_node;
     }
     atomic_fetch_add(&q->size, 1);
+    debug("%d", atomic_load(&q->size));
 }
 
 Node deqeue(Queue* q) {
@@ -34,6 +41,7 @@ Node deqeue(Queue* q) {
 }
 
 void free_queue(Queue* q) {
+    assert(q != NULL);
     Node* walk = q->head;
     while (walk) {
         Node* to_delete = walk;
