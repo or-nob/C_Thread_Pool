@@ -3,7 +3,7 @@
 # INSTALL_PATH := /usr/bin
 TARGET_EXEC := pool
 
-# CC := cc
+ CC := cc
 PROJECT_DIRS := .
 BUILD_DIR := ./bin
 # LIB_DIR := ./libs
@@ -32,7 +32,7 @@ LIBS :=
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
 LINKERS := -pthread
-CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DNDEBUG -DC_DEMO
+CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DNDEBUG -DCPP_DEMO
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

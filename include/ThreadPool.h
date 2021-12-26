@@ -1,7 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef __THREADPOOL_H__
 #define __THREADPOOL_H__
 
@@ -23,6 +19,10 @@ typedef struct {
     Queue res;
     atomic_int work_remaining;
 } Pool;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void init_pool(Pool* p);
 void submit(Pool* p, const_T f, T params);

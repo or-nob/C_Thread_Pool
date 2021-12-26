@@ -9,9 +9,7 @@ ThreadPool::ThreadPool(size_t thread_size) {
 
 ThreadPool::~ThreadPool() { close_pool(&this->pool); }
 
-void ThreadPool::submitTask(const_T f, T params) {
-    submit(&this->pool, f, params);
-}
+void ThreadPool::submitTask(const_T f, T params) { submit(&this->pool, f, params); }
 
 void ThreadPool::wait() {
     while (this->pool.work_remaining != 0)
