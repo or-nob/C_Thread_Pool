@@ -12,7 +12,7 @@ Please look at the ```demo.c``` file for better understanding of various apis.
 
 ## Installation
 
-This requires [Clang](https://clang.llvm.org/)/[GCC](https://gcc.gnu.org/) to run.
+This requires [Clang](https://clang.llvm.org/) to run.
 
 To compile and test the demo.c file.
 
