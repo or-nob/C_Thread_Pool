@@ -4,7 +4,7 @@
 This provides a simple list of apis to create a thread pool of a certain size. It then recycle through limited resource to complete jobs submitted in the pool queue. It works using POSIX threads in Unix/Unix-like systems.
 
 ## Example
-Please look at the ```demo.c``` file for better understanding of various apis.
+Please look at the ```demo.cpp``` file for better understanding of various apis.
 
 ## Features
 
