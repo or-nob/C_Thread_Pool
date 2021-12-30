@@ -54,8 +54,7 @@ T run(T arg) {
             assert(ret == 0);
         }
 
-        // when all works are done and predicate is turned on we bail.
-        if (!(atomic_load(&p->q.size)) && atomic_load(&p->pred)) {
+        if (atomic_load(&p->pred)) {
             ret = pthread_mutex_unlock(&p->lock);
             assert(ret == 0);
             goto end;
