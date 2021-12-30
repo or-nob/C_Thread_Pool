@@ -6,12 +6,11 @@ void init_queue(Queue* q) {
     atomic_store(&q->size, 0);
 }
 
-void enqueue(Queue* q, const_T val, T param) {
+void enqueue(Queue* q, const_T val) {
     assert(q != NULL);
     Node* new_node = (Node*)malloc(sizeof(Node));
     assert(new_node != NULL);
     new_node->val = val;
-    new_node->param = param;
     new_node->prev = NULL;
     new_node->next = NULL;
     if (!q->head) {
@@ -31,12 +30,11 @@ Node deqeue(Queue* q) {
     assert(q->head != NULL);
     Node* to_delete = q->head;
     const_T val = to_delete->val;
-    T param = to_delete->param;
     q->head = q->head->next;
     if (q->head) q->head->prev = NULL;
     free(to_delete);
     atomic_fetch_sub(&q->size, 1);
-    return (Node){val, param, NULL, NULL};
+    return (Node){val, NULL, NULL};
     // return to_delete;
 }
 

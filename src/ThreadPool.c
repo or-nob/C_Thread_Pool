@@ -28,7 +28,11 @@ void submit(Pool* p, const_T f, T params) {
     int8_t ret = -1;
     ret = pthread_mutex_lock(&p->lock);
     assert(ret == 0);
-    enqueue(&p->q, f, params);
+    Function* func = (Function*)malloc(sizeof(Function));
+    assert(func != NULL);
+    func->f = f;
+    func->params = params;
+    enqueue(&p->q, func);
     ret = pthread_cond_signal(&p->cond);
     assert(ret == 0);
     ret = pthread_mutex_unlock(&p->lock);
@@ -60,12 +64,15 @@ T run(T arg) {
         assert(n.val != NULL);
         ret = pthread_mutex_unlock(&p->lock);
         assert(ret == 0);
-        func f = n.val;
-        T res = f(n.param);
+        Function* f_ptr = (Function*)n.val;
+        func func = f_ptr->f;
+        T res = func(f_ptr->params);
+
+        free(f_ptr);
 
         ret = pthread_mutex_lock(&p->res_lock);
         assert(ret == 0);
-        enqueue(&p->res, res, NULL);
+        enqueue(&p->res, res);
         ret = pthread_mutex_unlock(&p->res_lock);
         assert(ret == 0);
         atomic_fetch_sub(&p->work_remaining, 1);

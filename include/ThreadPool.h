@@ -20,6 +20,11 @@ typedef struct {
     atomic_int work_remaining;
 } Pool;
 
+typedef struct {
+    const_T f;
+    T params;
+} Function;
+
 #ifdef __cplusplus
 extern "C" {
 #endif

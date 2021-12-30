@@ -19,7 +19,6 @@ typedef void* T;
 
 typedef struct Node {
     const_T val;
-    T param;
     struct Node* next;
     struct Node* prev;
 } Node;
@@ -34,7 +33,7 @@ typedef struct {
 extern "C" {
 #endif
 void init_queue(Queue* q);
-void enqueue(Queue* q, const_T val, T param);
+void enqueue(Queue* q, const_T val);
 Node deqeue(Queue* q);
 void free_queue(Queue* q);
 
