@@ -8,8 +8,7 @@ void init_queue(Queue* q) {
 
 void enqueue(Queue* q, const_T val) {
     assert(q != NULL);
-    Node* new_node = (Node*)malloc(sizeof(Node));
-    assert(new_node != NULL);
+    Node* new_node = (Node*)c_malloc(sizeof(Node));
     new_node->val = val;
     new_node->prev = NULL;
     new_node->next = NULL;

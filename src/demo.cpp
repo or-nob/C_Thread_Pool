@@ -1,6 +1,5 @@
 #include <string.h>
 
-#include "Debug.h"
 #define JOB_NUM 10
 
 #ifdef CPP_DEMO
@@ -39,7 +38,7 @@ int main(void) {
     char* param_arr_str[JOB_NUM];
     for (size_t i = 0; i < JOB_NUM; ++i) param_arr[i] = i + 1;
     for (size_t i = 0; i < JOB_NUM; ++i) {
-        char* arr = (char*)malloc(sizeof(char) * 10);
+        char* arr = (char*)c_malloc(sizeof(char) * 10);
         sprintf(arr, "%ld", i);
         param_arr_str[i] = arr;
     }
@@ -47,8 +46,10 @@ int main(void) {
 #ifdef CPP_DEMO
     printf("C++ demo:\n");
     ThreadPool tp(4);
-    for (size_t i = 0; i < JOB_NUM; ++i) tp.submitTask((const_T)&f1, &param_arr[i]);
-    for (size_t i = 0; i < JOB_NUM; ++i) tp.submitTask((const_T)&f2, &param_arr_str[i]);
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        tp.submitTask((const_T)&f1, &param_arr[i]);
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        tp.submitTask((const_T)&f2, &param_arr_str[i]);
     tp.submitTask((const_T)&f3, NULL);
     tp.submitTask((const_T)&f4, NULL);
 
@@ -64,8 +65,10 @@ int main(void) {
     Pool tp;
     tp.thread_size = 6;
     init_pool(&tp);
-    for (size_t i = 0; i < JOB_NUM; ++i) submit(&tp, (const_T)&f1, &param_arr[i]);
-    for (size_t i = 0; i < JOB_NUM; ++i) submit(&tp, (const_T)&f2, &param_arr_str[i]);
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        submit(&tp, (const_T)&f1, &param_arr[i]);
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        submit(&tp, (const_T)&f2, &param_arr_str[i]);
     submit(&tp, (const_T)&f3, NULL);
     submit(&tp, (const_T)&f4, NULL);
 

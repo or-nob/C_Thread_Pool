@@ -15,8 +15,7 @@ void init_pool(Pool* p) {
     ret = pthread_cond_init(&p->cond, NULL);
     assert(ret == 0);
 
-    p->thread_array = (pthread_t*)malloc(sizeof(pthread_t) * p->thread_size);
-    assert(p->thread_array != NULL);
+    p->thread_array = (pthread_t*)c_malloc(sizeof(pthread_t) * p->thread_size);
 
     for (size_t i = 0; i < p->thread_size; ++i) {
         ret = pthread_create(&p->thread_array[i], NULL, run, p);
@@ -28,8 +27,7 @@ void submit(Pool* p, const_T f, T params) {
     int8_t ret = -1;
     ret = pthread_mutex_lock(&p->lock);
     assert(ret == 0);
-    Function* func = (Function*)malloc(sizeof(Function));
-    assert(func != NULL);
+    Function* func = (Function*)c_malloc(sizeof(Function));
     func->f = f;
     func->params = params;
     enqueue(&p->q, func);
