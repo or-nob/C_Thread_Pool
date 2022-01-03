@@ -32,7 +32,7 @@ LIBS :=
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
 LINKERS := -pthread
-CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DNDEBUG -DCPP_DEMO
+CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DCPP_DEMO -DNDEBUG 
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

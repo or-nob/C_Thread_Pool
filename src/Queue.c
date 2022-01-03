@@ -21,7 +21,7 @@ void enqueue(Queue* q, const_T val) {
         q->tail = new_node;
     }
     atomic_fetch_add(&q->size, 1);
-    debug("%d", atomic_load(&q->size));
+    // debug("%d", atomic_load(&q->size));
 }
 
 Node deqeue(Queue* q) {
@@ -39,10 +39,11 @@ Node deqeue(Queue* q) {
 
 void free_queue(Queue* q) {
     assert(q != NULL);
-    Node* walk = q->head;
-    while (walk) {
+
+    for (Node* walk = q->head; walk;) {
         Node* to_delete = walk;
         walk = walk->next;
+        Node* walk = q->head;
         free(to_delete);
     }
 }

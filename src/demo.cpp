@@ -38,7 +38,7 @@ int main(void) {
     char* param_arr_str[JOB_NUM];
     for (size_t i = 0; i < JOB_NUM; ++i) param_arr[i] = i + 1;
     for (size_t i = 0; i < JOB_NUM; ++i) {
-        char* arr = (char*)c_malloc(sizeof(char) * 10);
+        char* arr = (char*)c_malloc(sizeof(char) * JOB_NUM);
         sprintf(arr, "%ld", i);
         param_arr_str[i] = arr;
     }

@@ -45,8 +45,8 @@ T run(T arg) {
         int8_t ret = -1;
         ret = pthread_mutex_lock(&p->lock);
         assert(ret == 0);
-        debug("%p %p %d %d", p, &p->q, atomic_load(&p->q.size),
-              atomic_load(&p->pred));
+        // debug("%p %p %d %d", p, &p->q, atomic_load(&p->q.size),
+        //       atomic_load(&p->pred));
         while (!(atomic_load(&p->q.size)) && !atomic_load(&p->pred)) {
             ret = pthread_cond_wait(&p->cond, &p->lock);
             assert(ret == 0);
