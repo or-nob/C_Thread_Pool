@@ -13,27 +13,27 @@
 #include "Debug.h"
 #include "Helper.h"
 
-typedef const void* const_T;
+typedef const void *const_T;
 
 typedef struct Node {
     const_T val;
-    struct Node* next;
-    struct Node* prev;
+    struct Node *next;
+    struct Node *prev;
 } Node;
 
 typedef struct {
     atomic_int size;
-    Node* head;
-    Node* tail;
+    Node *head;
+    Node *tail;
 } Queue;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-void init_queue(Queue* q);
-void enqueue(Queue* q, const_T val);
-Node deqeue(Queue* q);
-void free_queue(Queue* q);
+void init_queue(Queue *q);
+void enqueue(Queue *q, const_T val);
+Node deqeue(Queue *q);
+void free_queue(Queue *q);
 
 #ifdef __cplusplus
 }

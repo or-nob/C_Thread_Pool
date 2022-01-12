@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-typedef void* T;
+typedef void *T;
 
 #ifdef __cplusplus
 extern "C" {

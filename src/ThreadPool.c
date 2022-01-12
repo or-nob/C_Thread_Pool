@@ -1,6 +1,6 @@
 #include "ThreadPool.h"
 
-void init_pool(Pool* p) {
+void init_pool(Pool *p) {
     init_queue(&p->q);
     init_queue(&p->res);
 
@@ -15,7 +15,7 @@ void init_pool(Pool* p) {
     ret = pthread_cond_init(&p->cond, NULL);
     assert(ret == 0);
 
-    p->thread_array = (pthread_t*)c_malloc(sizeof(pthread_t) * p->thread_size);
+    p->thread_array = (pthread_t *)c_malloc(sizeof(pthread_t) * p->thread_size);
 
     for (size_t i = 0; i < p->thread_size; ++i) {
         ret = pthread_create(&p->thread_array[i], NULL, run, p);
@@ -23,11 +23,11 @@ void init_pool(Pool* p) {
     }
 }
 
-void submit(Pool* p, const_T f, T params) {
+void submit(Pool *p, const_T f, T params) {
     int8_t ret = -1;
     ret = pthread_mutex_lock(&p->lock);
     assert(ret == 0);
-    Function* func = (Function*)c_malloc(sizeof(Function));
+    Function *func = (Function *)c_malloc(sizeof(Function));
     func->f = f;
     func->params = params;
     enqueue(&p->q, func);
@@ -39,7 +39,7 @@ void submit(Pool* p, const_T f, T params) {
 }
 
 T run(T arg) {
-    Pool* p = (Pool*)arg;
+    Pool *p = (Pool *)arg;
     while (1) {
         Node n;
         int8_t ret = -1;
@@ -62,7 +62,7 @@ T run(T arg) {
         assert(n.val != NULL);
         ret = pthread_mutex_unlock(&p->lock);
         assert(ret == 0);
-        Function* f_ptr = (Function*)n.val;
+        Function *f_ptr = (Function *)n.val;
         func func = f_ptr->f;
         T res = func(f_ptr->params);
 
@@ -80,7 +80,7 @@ end:
     return NULL;
 }
 
-void join_pool(Pool* p) {
+void join_pool(Pool *p) {
     int8_t ret = -1;
     for (size_t i = 0; i < p->thread_size; ++i) {
         ret = pthread_join(p->thread_array[i], NULL);
@@ -88,7 +88,7 @@ void join_pool(Pool* p) {
     }
 }
 
-void close_pool(Pool* p) {
+void close_pool(Pool *p) {
     int8_t ret = -1;
     ret = pthread_mutex_lock(&p->lock);
     assert(ret == 0);
@@ -102,7 +102,7 @@ void close_pool(Pool* p) {
     free_pool(p);
 }
 
-void free_pool(Pool* p) {
+void free_pool(Pool *p) {
     free(p->thread_array);
     free_queue(&p->res);
     free_queue(&p->q);

@@ -9,7 +9,7 @@
 typedef T (*func)(T);
 
 typedef struct {
-    pthread_t* thread_array;
+    pthread_t *thread_array;
     size_t thread_size;
     pthread_mutex_t lock;
     pthread_mutex_t res_lock;
@@ -29,12 +29,12 @@ typedef struct {
 extern "C" {
 #endif
 
-void init_pool(Pool* p);
-void submit(Pool* p, const_T f, T params);
+void init_pool(Pool *p);
+void submit(Pool *p, const_T f, T params);
 static T run(T arg);
-void join_pool(Pool* p);
-void close_pool(Pool* p);
-void free_pool(Pool* p);
+void join_pool(Pool *p);
+void close_pool(Pool *p);
+void free_pool(Pool *p);
 
 #ifdef __cplusplus
 }

@@ -8,37 +8,38 @@
 #include "ThreadPool.h"
 #endif
 
-void* f1(void* args) {
-    int recasted_arg = *(int*)args;
+void *f1(void *args) {
+    int recasted_arg = *(int *)args;
     printf("Int: %d\n", recasted_arg);
     sleep(1);
-    char* str = strdup("hello");
+    char *str = strdup("hello");
     return str;
 }
 
-void* f2(void* args) {
-    const char* recasted_arg = *(const char**)args;
+void *f2(void *args) {
+    const char *recasted_arg = *(const char **)args;
     printf("Str: %s\n", recasted_arg);
     sleep(1);
     return NULL;
 }
 
-void* f3(void) {
+void *f3(void) {
     printf("from c\n");
     return NULL;
 }
 
-void* f4(void) {
+void *f4(void) {
     printf("from d\n");
     return NULL;
 }
 
 int main(void) {
     size_t param_arr[JOB_NUM];
-    char* param_arr_str[JOB_NUM];
-    for (size_t i = 0; i < JOB_NUM; ++i) param_arr[i] = i + 1;
+    char *param_arr_str[JOB_NUM];
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        param_arr[i] = i + 1;
     for (size_t i = 0; i < JOB_NUM; ++i) {
-        char* arr = (char*)c_malloc(sizeof(char) * JOB_NUM);
+        char *arr = (char *)c_malloc(sizeof(char) * JOB_NUM);
         sprintf(arr, "%ld", i);
         param_arr_str[i] = arr;
     }
@@ -57,8 +58,8 @@ int main(void) {
 
     while (tp.notEmpty()) {
         const_T res = tp.popResult();
-        if (res) printf("output: %s\n", (char*)res);
-        free((char*)res);
+        if (res) printf("output: %s\n", (char *)res);
+        free((char *)res);
     }
 #elif defined C_DEMO
     printf("C demo:\n");
@@ -76,13 +77,14 @@ int main(void) {
         ;
     while (tp.res.size != 0) {
         Node res = deqeue(&tp.res);
-        if (res.val) printf("output: %s\n", (char*)res.val);
-        free((char*)res.val);
+        if (res.val) printf("output: %s\n", (char *)res.val);
+        free((char *)res.val);
     }
     close_pool(&tp);
 #endif
 
-    for (size_t i = 0; i < JOB_NUM; ++i) free(param_arr_str[i]);
+    for (size_t i = 0; i < JOB_NUM; ++i)
+        free(param_arr_str[i]);
 
     return EXIT_SUCCESS;
 }

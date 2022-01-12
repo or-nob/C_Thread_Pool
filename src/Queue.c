@@ -1,14 +1,14 @@
 #include "Queue.h"
 
-void init_queue(Queue* q) {
+void init_queue(Queue *q) {
     assert(q != NULL);
     q->head = NULL;
     atomic_store(&q->size, 0);
 }
 
-void enqueue(Queue* q, const_T val) {
+void enqueue(Queue *q, const_T val) {
     assert(q != NULL);
-    Node* new_node = (Node*)c_malloc(sizeof(Node));
+    Node *new_node = (Node *)c_malloc(sizeof(Node));
     new_node->val = val;
     new_node->prev = NULL;
     new_node->next = NULL;
@@ -24,10 +24,10 @@ void enqueue(Queue* q, const_T val) {
     // debug("%d", atomic_load(&q->size));
 }
 
-Node deqeue(Queue* q) {
+Node deqeue(Queue *q) {
     assert(q != NULL);
     assert(q->head != NULL);
-    Node* to_delete = q->head;
+    Node *to_delete = q->head;
     const_T val = to_delete->val;
     q->head = q->head->next;
     if (q->head) q->head->prev = NULL;
@@ -37,13 +37,13 @@ Node deqeue(Queue* q) {
     // return to_delete;
 }
 
-void free_queue(Queue* q) {
+void free_queue(Queue *q) {
     assert(q != NULL);
 
-    for (Node* walk = q->head; walk;) {
-        Node* to_delete = walk;
+    for (Node *walk = q->head; walk;) {
+        Node *to_delete = walk;
         walk = walk->next;
-        Node* walk = q->head;
+        Node *walk = q->head;
         free(to_delete);
     }
 }
