@@ -32,7 +32,7 @@ extern "C" {
 #endif
 void init_queue(Queue *q);
 void enqueue(Queue *q, const_T val);
-Node deqeue(Queue *q);
+const_T deqeue(Queue *q);
 void free_queue(Queue *q);
 
 #ifdef __cplusplus

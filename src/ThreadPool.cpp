@@ -2,8 +2,6 @@
 
 ThreadPool::ThreadPool(size_t thread_size) {
     this->pool.thread_size = thread_size;
-    this->pool.thread_array = NULL;
-
     init_pool(&this->pool);
 }
 
@@ -12,13 +10,10 @@ ThreadPool::~ThreadPool() { close_pool(&this->pool); }
 void ThreadPool::submitTask(const_T f, T params) { submit(&this->pool, f, params); }
 
 void ThreadPool::wait() {
-    while (this->pool.work_remaining != 0)
+    while (atomic_load(&this->pool.work_remaining))
         ;
 }
 
-const_T ThreadPool::popResult() {
-    Node res = deqeue(&this->pool.res);
-    return res.val;
-}
+const_T ThreadPool::popResult() { return deqeue(&this->pool.res); }
 
 bool ThreadPool::notEmpty() { return atomic_load(&this->pool.res.size); }

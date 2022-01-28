@@ -1,3 +1,4 @@
+#include <atomic>
 #include <string.h>
 
 #define JOB_NUM 10
@@ -33,6 +34,11 @@ void *f4(void) {
     return NULL;
 }
 
+void *f5(void *) {
+    printf("hello\n");
+    return NULL;
+}
+
 int main(void) {
     size_t param_arr[JOB_NUM];
     char *param_arr_str[JOB_NUM];
@@ -61,6 +67,7 @@ int main(void) {
         if (res) printf("output: %s\n", (char *)res);
         free((char *)res);
     }
+
 #elif defined C_DEMO
     printf("C demo:\n");
     Pool tp;
@@ -73,12 +80,13 @@ int main(void) {
     submit(&tp, (const_T)&f3, NULL);
     submit(&tp, (const_T)&f4, NULL);
 
-    while (tp.work_remaining != 0)
+    while (atomic_load(&tp.work_remaining))
         ;
-    while (tp.res.size != 0) {
-        Node res = deqeue(&tp.res);
-        if (res.val) printf("output: %s\n", (char *)res.val);
-        free((char *)res.val);
+
+    while (atomic_load(&tp.res.size)) {
+        const_T res = deqeue(&tp.res);
+        if (res) printf("output: %s\n", (char *)res);
+        free((char *)res);
     }
     close_pool(&tp);
 #endif

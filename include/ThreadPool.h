@@ -9,8 +9,10 @@
 typedef T (*func)(T);
 
 typedef struct {
-    pthread_t *thread_array;
+    // pthread_t *thread_array;
+    Queue thread_queue;
     size_t thread_size;
+    size_t number_of_threads;
     pthread_mutex_t lock;
     pthread_mutex_t res_lock;
     pthread_cond_t cond;
@@ -18,6 +20,7 @@ typedef struct {
     Queue q;
     Queue res;
     atomic_int work_remaining;
+    atomic_int busy_threads;
 } Pool;
 
 typedef struct {

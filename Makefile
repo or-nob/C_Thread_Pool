@@ -3,7 +3,8 @@
 # INSTALL_PATH := /usr/bin
 TARGET_EXEC := pool
 
- CC := cc
+CC := clang
+CXX := clang++
 PROJECT_DIRS := .
 BUILD_DIR := ./bin
 # LIB_DIR := ./libs
@@ -32,11 +33,11 @@ LIBS :=
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
 LINKERS := -pthread
-CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3 -DCPP_DEMO -DNDEBUG 
+CPPFLAGS := $(INC_FLAGS) -MMD -MP $(LINKERS) -O3  -DC_DEMO -g -fsanitize=thread # -DNDEBUG   
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CXX) $(OBJS) $(LIBS) $(LINKERS) -o $@ $(LDFLAGS)
+	$(CXX) $(OBJS) $(LIBS) $(LINKERS) -o $@ $(LDFLAGS) -fsanitize=thread -g 
 
 # Build step for C source
 $(BUILD_DIR)/%.c.o: %.c
