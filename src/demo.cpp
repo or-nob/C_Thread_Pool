@@ -26,16 +26,12 @@ void *f2(void *args) {
 
 void *f3(void) {
     printf("from c\n");
+    sleep(1);
     return NULL;
 }
 
 void *f4(void) {
     printf("from d\n");
-    return NULL;
-}
-
-void *f5(void *) {
-    printf("hello\n");
     return NULL;
 }
 
@@ -75,13 +71,13 @@ int main(void) {
     init_pool(&tp);
     for (size_t i = 0; i < JOB_NUM; ++i)
         submit(&tp, (const_T)&f1, &param_arr[i]);
+
     for (size_t i = 0; i < JOB_NUM; ++i)
         submit(&tp, (const_T)&f2, &param_arr_str[i]);
     submit(&tp, (const_T)&f3, NULL);
     submit(&tp, (const_T)&f4, NULL);
 
-    while (atomic_load(&tp.work_remaining))
-        ;
+    wait_pool(&tp);
 
     while (atomic_load(&tp.res.size)) {
         const_T res = deqeue(&tp.res);
